@@ -5,8 +5,10 @@
 
 ## Maximum rooms booked
 - Idea here is to use the concept of `difference array`
-- We pre process the range and find the maximum after ding a running sum.
-- I have used arrays which can be optimised using hashmap
+- We pre process the intervals and build an array `pre`.
+- Then we do a running sum and store the same result.
+- Then we find maximum value in `pre`  which gives us the *maximum overlapping interval*  .
+
 ```
 def hotelReservations(reservation):
     p1 = reservation.split('|')
