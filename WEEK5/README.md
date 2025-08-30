@@ -64,3 +64,24 @@ def countIt(nums,n):
                 count += 1
         return count
 ```
+
+## IPL Ticket Management
+
+- This problem is a very similar variant of the Josephus problem, but with negative skip and a starting position.
+- Incorporate that into Josephus and you have the solution.
+- Make sure to verify with the sample how skip works and if offset is the 1-based position or 0-based index.
+
+```
+def reorderQueue(length, offset, skip):
+    l = length
+    arr = [i for i in range(l)]
+    current = offset - 1
+    reordered = []
+    while l > 0:
+        current = (current + skip) % l
+        reordered.append(arr.pop(current))
+        current = current % l
+        l -= 1
+
+    return reordered
+```
