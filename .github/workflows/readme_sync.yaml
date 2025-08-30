@@ -1,0 +1,84 @@
+name: sync_it
+on:
+  workflow_dispatch
+
+permissions:
+  contents: write
+
+jobs:
+  update_readme:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+  
+      - name: Store header section
+        run: |
+          {
+            echo "HEADER_SECTION<<EOF"
+            echo "# weekly-contests"
+            echo 
+            echo "Weekly contests being conducted on hackerrank. This is a master repo containing the question description, tets cases and solutions for each contest."
+            echo 
+            echo "### Summary"
+            echo 
+            echo "EOF"
+          } >> $GITHUB_ENV
+  
+      - name: Display header
+        run:  |
+          echo "$HEADER_SECTION" >> dis.md
+          cat dis.md
+
+      - name: creating tabulation
+        run: |
+          dirs=$(ls -d */ | sed 's#/##')
+          echo "$dirs"
+
+          echo "| about | contents |" > temp.md
+          echo "|-----|-----|" >> temp.md
+          for i in $dirs;
+          do 
+            string="| [$i](https://github.com/VenkataRamanaRao5/weekly-contests/tree/main/$i) <br>"
+
+            if [[ -f "$i/description.txt" ]]; then
+              desc=$(cat "$i/description.txt")
+            else
+              desc=""
+            fi
+            
+            string="$string $desc |"
+            
+            subfolders=$(ls -d $i/*/ 2>/dev/null | xargs -n 1 basename)
+            for sub in $subfolders;
+            do
+              path=${sub#${i}}
+              t="[$path](https://github.com/VenkataRamanaRao5/weekly-contests/tree/main/$i/$path) <br>"
+              string="$string $t"
+            done;
+            
+            string="$string |"
+            echo "$string" >> temp.md
+          done;
+          cat temp.md
+
+      - name: create readme
+        run: |
+          cat dis.md temp.md > README.md
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet README.md; then
+            echo "No changes in README.md, skipping commit."
+          else
+            git add README.md
+            git commit -m "Update README.md with companies list"
+            git push
+          fi
+        
+          
+          
+        
