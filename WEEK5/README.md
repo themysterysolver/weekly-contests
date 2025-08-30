@@ -85,3 +85,63 @@ def reorderQueue(length, offset, skip):
 
     return reordered
 ```
+
+##Find Triplets
+- This is a binary search problem if you want the most time optimized solution
+- From the problem statement we know that there is either 1 or 0 triplet and pairs or triplets both occur consecutively.
+- Based on this we see a property, if no triplet has occured before a particular index, then pairs start at the even index implying the triplet is on the right side
+- If the pair starts at odd index then triplet has already occured so we search in the left hand side
+
+```
+public static int findTriplet(int n, List<Integer> arr) {
+        if(n % 2 == 0) {
+            return -1; 
+        }
+
+        int start = 0, end = n - 1;
+
+        while(start < end) {
+            int mid = start + (end - start) / 2;
+
+
+            if(mid > 0 && mid < n - 1 && 
+               arr.get(mid - 1).equals(arr.get(mid)) && 
+               arr.get(mid).equals(arr.get(mid + 1))) {
+                return arr.get(mid);
+            }
+
+
+            if(mid % 2 == 0) {
+
+                if(mid < n - 1 && arr.get(mid).equals(arr.get(mid + 1))) {
+
+                    start = mid + 2;
+                } else {
+
+                    end = mid;
+                }
+            } else {
+
+                if(mid > 0 && arr.get(mid - 1).equals(arr.get(mid))) {
+
+                    start = mid + 1;
+                } else {
+
+                    end = mid;
+                }
+            }
+        }
+        if(start%2==0){
+            start--;
+        }
+
+        if(start > 0 && start < n - 1 &&
+           arr.get(start - 1).equals(arr.get(start)) && 
+           arr.get(start).equals(arr.get(start + 1))) {
+            return arr.get(start);
+        }
+
+        return -1;
+
+    }
+```
