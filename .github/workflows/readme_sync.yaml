@@ -60,7 +60,7 @@ jobs:
               [[ -d "$sub" ]] || continue
             
               path=$(basename "$sub")
-              t="[$path](https://github.com/themysterysolver-bot/weekly-contests/tree/main/$i/$path) <br>"
+              t="[$path](https://github.com/VenkataRamanaRao5/weekly-contests/tree/main/$i/$path) <br>"
               string="$string $t"
             done
             
