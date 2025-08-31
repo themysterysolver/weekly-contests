@@ -2,7 +2,7 @@ name: sync_it
 on:
   pull_request:
     types: [opened, synchronize, reopened]
-  workflow_dispatch
+  workflow_dispatch:
 
 permissions:
   contents: write
