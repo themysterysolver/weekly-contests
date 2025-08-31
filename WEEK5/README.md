@@ -1,6 +1,6 @@
 # Week 5 - Arrays  2 - questions and solutions
 
-
+Contest link: https://www.hackerrank.com/weekly-contest-third-years-5/
 
 
 ## Maximum rooms booked
